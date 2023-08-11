@@ -10,12 +10,12 @@ interface Props {
 }
 
 export const WalletWrapper = ({address, balance}:Props) => {
-
+  
   return (
     <>
       <Flex gap={10} justifyContent={"center"} width={"100%"}>
         <Wallet balance={balance} address={address} />    
-        <WalletConvertion balance={balance}   />
+        <WalletConvertion address={address} balance={balance}   />
       </Flex>
       <Divider mt={4} />
     </>

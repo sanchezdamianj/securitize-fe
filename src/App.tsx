@@ -7,40 +7,42 @@ import {  useState } from 'react'
 import { WalletWrapper } from './components/WalletWrapper'
 import { useQuery,useMutation } from "react-query";
 import axios from 'axios'
+import useWalletsStore from './store/store'
+// import { WalletInputSearch } from './components/WalletInputSearch'
 
 
 
 function App() {
   const [isOpen, setIsOpen] = useState(false)
   const [address, setAddress] = useState('')
+  const [ wallets, setWallets] = useState([])
+  const [spinner, setSpinner] = useState(false)
+
 
   const createWallet = async (address: string) => {
+    setSpinner(true)
     await axios.put('http://localhost:3000/api/v1/wallets', 
     {
         address: address,
         isFavorite: false,
     },
     );
+    const newWallet = {
+      address: address,
+      isFavorite: false,
+    }
+    useWalletsStore.getState().addWallet(newWallet) 
+
+    const res = await axios.get(`http://localhost:3000/api/v1/wallets/${address}`,
+    { withCredentials: true })
+    const wallets = res.data
+    setWallets(wallets)
+    console.log(wallets)
+    setSpinner(false)
+
   };
 
   const {mutate} = useMutation(createWallet)
-  const { data: wallets, isLoading } = useQuery({
-    queryKey: ['wallets'], queryFn: async () => {
-        const res = await axios.get(`http://localhost:3000/api/v1/wallets/${address}`,
-            { withCredentials: true })
-        return res.data
-    }
-})
-
-
-if (isLoading) return <Spinner
-    thickness='4px'
-    speed='0.65s'
-    emptyColor='gray.200'
-    color='blue.500'
-    size='xl'
-/>
-
 
   const handleClick = () => { 
     setIsOpen(true)
@@ -48,7 +50,6 @@ if (isLoading) return <Spinner
   }
 
   const handleChange = (event:any) => {
-    // event.preventDefault();
     setAddress(event.target.value)
   }
 
@@ -72,7 +73,7 @@ if (isLoading) return <Spinner
               onChange={handleChange}
           />
       </FormControl>
-   
+      {/* <WalletInputSearch /> */}
     {
         isOpen && 
          <Flex flexDir={"column"} justifyContent={"center"} alignItems={"center"} gap={4} my={8}>
@@ -83,9 +84,20 @@ if (isLoading) return <Spinner
                 This Wallet is Old
              </Alert>
           }
-           
-           <WalletWrapper balance={wallets?.balance} address={address}/>
+          {
+            spinner
+            ?
+              <Spinner
+                        thickness='4px'
+                        speed='0.65s'
+                        emptyColor='gray.200'
+                        color='blue.500'
+                        size='xl'
+            />
+            :
+            <WalletWrapper balance={wallets?.balance} address={address}/>
 
+          }
          </Flex>
   
         

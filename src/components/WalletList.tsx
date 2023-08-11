@@ -10,9 +10,11 @@ import {
   } from '@chakra-ui/react'
 import {WalletWrapper} from './WalletWrapper'
 import { Wallet } from '../types'
+import useWalletsStore from '../store/store';
 
 
-export const WalletList = ({wallets = []}) => {
+export const WalletList = () => {
+  const wallets: Wallet[] = useWalletsStore((state) => state.wallets);
   return (
     <TableContainer>
     <Table variant='simple' colorScheme='teal'>
@@ -30,7 +32,6 @@ export const WalletList = ({wallets = []}) => {
          )
         }
 
-      
       </Tbody>
     </Table>
   </TableContainer>

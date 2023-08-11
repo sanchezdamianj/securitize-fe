@@ -5,7 +5,8 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 const WalletConvertion = ({balance}:Wallet) => {
-  const [currency, setCurrency] = useState<string>("Select currency");
+  
+  const [currency, setCurrency] = useState<string>("USD");
   const [exchangeRate, setExchangeRate] = useState<number>(0);
 
   const getExchangeRate = async (currency:string) => {  
@@ -31,7 +32,7 @@ useEffect(() => {
     <FormControl display={"flex"} justifyContent={"space-between"} alignItems={"center"} gap={2}>
         <Text fontWeight={"600"}>${(((balance??0) * exchangeRate).toFixed(3))?? 0}</Text>
             <Select onChange={handleChange}>
-                {['Select currency','USD', 'EUR'].map(currency => 
+                {['USD', 'EUR'].map(currency => 
                 <option key={currency} value={currency}> {currency}</option>
                 )
                 }
