@@ -16,6 +16,7 @@ const Wallet = ({ balance}:Wallet) => {
             isDisabled={!isAllowed}
             placeholder='Enter your ETH'
             value={balance?? ''}
+            style={{fontFamily: "600"}}
             
         />
         {

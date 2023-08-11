@@ -1,6 +1,6 @@
 export interface Wallet {
     id?:number,
-    address?:string,
+    address:string,
     account?:string
     isFavorite?:boolean,
     balance?:number
