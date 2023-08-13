@@ -26,7 +26,7 @@ function App() {
     const res = await axios.get(`http://localhost:3000/api/v1/wallets/${address}`,
     { withCredentials: true })
     const wallets = res.data
-  
+
     const newWallet = {
       address: address,
       balance: +(wallets.balance),

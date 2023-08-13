@@ -18,6 +18,11 @@ export const WalletWrapper = () => {
     useWalletsStore.getState().sortWalletsByBalanceDes()
     setSortedWallet(useWalletsStore.getState().wallets)
   }
+
+  const handleSortedFavorite = () => {
+    useWalletsStore.getState().sortByFavorites()
+    setSortedWallet(useWalletsStore.getState().wallets)
+  }
   
   useEffect(()=>{
     setSortedWallet(wallets)
@@ -28,6 +33,7 @@ export const WalletWrapper = () => {
     <Flex justifyContent={"end"} alignItems={"center"} my={4} gap={2}>
       <Button onClick={handleSortWalletsAsc}>Sort Asc</Button>
       <Button onClick={handleSortWalletsDesc}>Sort Desc</Button>
+      <Button onClick={handleSortedFavorite}>Sort By Favs</Button>
     </Flex>
     <div>{sortedWallet.map((w)=>{return (
       <div key={w.address}>

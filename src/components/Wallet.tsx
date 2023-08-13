@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Card, CardBody, Flex,Input, Button, IconButton } from '@chakra-ui/react'
-import { EditIcon,CloseIcon,CheckIcon,StarIcon } from '@chakra-ui/icons'
-
+import { Card, CardBody, Flex,Input, Button } from '@chakra-ui/react'
+import { EditIcon,CloseIcon,CheckIcon } from '@chakra-ui/icons'
+import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { useMemo, useState } from 'react'
 
 import { Wallet } from '../types'
 import useWalletsStore from '../store/store'
 
 
-const Wallet = ({ balance }:Wallet) => {
+const Wallet = ({address,  balance }:Wallet) => {
     const [isAllowed, setIsAllowed] = useState(false)
     const [newAmount, setNewAmount ] = useState<number>(0)
+    const [testFav, setTestFav] = useState(false)
     
     const handleAmountChange = () => {
     //aca editar el amount de balance de esa wallet en el state de zustand
@@ -24,15 +25,27 @@ const Wallet = ({ balance }:Wallet) => {
     // useMemo(() => {
     //     setNewAmount(useWalletsStore.getState().wallets    editar esa wallet)
     // },[useWalletsStore.getState().wallets])
-
+     
+    const walletFoundInState = useWalletsStore.getState().wallets.find(wallet => wallet.address === address)
+    console.log(walletFoundInState)
+    const handleFavorite = () => {
+        if(walletFoundInState){
+            walletFoundInState.isFavorite = !walletFoundInState.isFavorite
+            setTestFav(walletFoundInState.isFavorite)
+            // useWalletsStore.getState().toggleFavorite(walletFoundInState)
+            console.log(useWalletsStore.getState().wallets)
+        }
+    }
 
   return (
     <Card boxShadow="lg" border={"2px solid #DDDDDD"} backgroundColor={"#F8F9FB"} p={"5px 15px 20px"}  w={"100%"} minWidth={"270px"}>
     <CardBody display={"flex"} justifyContent={"space=between"} alignItems={"center"} gap={2}> 
-        <IconButton aria-label='markFavorite'  icon={<StarIcon alignSelf={"center"} justifySelf={"start"}/>}
+        <Button onClick={handleFavorite}
         >
-            
-        </IconButton>
+            {
+               (testFav) ?  <AiFillStar size="md" /> : <AiOutlineStar size="md"/>
+            }
+        </Button>
         <Input 
             isDisabled={!isAllowed}
             placeholder='Enter your ETH'

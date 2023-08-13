@@ -10,7 +10,8 @@ interface WalletsState {
   sortWalletsByBalanceAsc: () => void;
   sortWalletsByBalanceDes: () => void;
   setExchangeRates: (rates: object | undefined) => void;
-  exchangeRates: object;
+
+  sortByFavorites: () => void;
 }
 
 
@@ -27,6 +28,11 @@ const useWalletsStore = create<WalletsState>((set) => ({
         wallet.id === walletId ? { ...wallet, isFavorite: !wallet.isFavorite } : wallet
       ),
     })),
+    sortByFavorites: () =>
+      set((state) => ({
+        wallets: [...state.wallets].sort((a, b) =>
+        b.isFavorite === a.isFavorite ? 0 : a.isFavorite ? -1 : 1 ),
+      })),
   sortWalletsByBalanceAsc: () =>
     set((state) => ({
       wallets: [...state.wallets].sort((a, b) =>(a.balance || 0) - (b.balance || 0)),
@@ -35,7 +41,7 @@ const useWalletsStore = create<WalletsState>((set) => ({
     set((state) => ({
       wallets: [...state.wallets].sort((a, b) =>(b.balance || 0) - (a.balance || 0)),
     })),
-    setExchangeRates: (rates) => set({ exchangeRates: rates }),
+  setExchangeRates: (rates) => set({ exchangeRates: rates }),
   })
 );
 
