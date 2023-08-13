@@ -1,30 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Card,  CardBody, Text, Select,FormControl } from '@chakra-ui/react'
 import { Wallet } from '../types'
-import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { getExchangeRate } from '../services/apidata.service';
+import useWalletsStore from '../store/store';
 
 const WalletConvertion = ({balance}:Wallet) => {
   
   const [currency, setCurrency] = useState<string>("USD");
   const [exchangeRate, setExchangeRate] = useState<number>(0);
-
-  const getExchangeRate = async (currency:string) => {  
-  const response = await axios.get(`http://localhost:3000/api/v1/exchange-rate`);
-  const res = response.data[0]
-  setExchangeRate(+res[currency]) 
-}
-
+  const setExchangeRates = useWalletsStore((state) => state.setExchangeRates);
 
 const handleChange = (e:any) => {
   e.preventDefault();
-  setCurrency(e.target.value);  
-  getExchangeRate(currency);
+  setCurrency(e.target.value); 
+  setExchangeRate(+(useWalletsStore.getState().exchangeRates[0][currency]))
 }
 
 useEffect(() => {
-  getExchangeRate(currency)
-},[currency])
+  // setExchangeRate(+(useWalletsStore.getState().exchangeRates[0][currency]))
+  getExchangeRate().then((rates) => { setExchangeRates(rates)});
+},[setExchangeRates])
+
+
 
   return (
     <Card boxShadow="lg" border={"2px solid #DDDDDD"} backgroundColor={"#F8F9FB"} p={"5px 15px 20px"} w={"100%"} minWidth={"270px"}>
