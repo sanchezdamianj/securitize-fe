@@ -2,10 +2,11 @@
 import { Card, CardBody, Flex,Input, Button } from '@chakra-ui/react'
 import { EditIcon,CloseIcon,CheckIcon } from '@chakra-ui/icons'
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
-import { useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Wallet } from '../types'
 import useWalletsStore from '../store/store'
+import { updateFavorite } from '../services/apidata.service';
 
 
 const Wallet = ({address,  balance }:Wallet) => {
@@ -14,26 +15,27 @@ const Wallet = ({address,  balance }:Wallet) => {
     const [favorite, setFavorite] = useState(false)
     
     const handleAmountChange = () => {
-    //aca editar el amount de balance de esa wallet en el state de zustand
+    //aca editar el amount de balance de esa wallet en el state de zustand y que recalcule el exc rate
     //     useWalletsStore.getState().setNewAmount(newAmount)
      }
     
     const handleChange = (e:any) => {
         setNewAmount(e.target.value)
     }
-
-    // useMemo(() => {
-    //     setNewAmount(useWalletsStore.getState().wallets    editar esa wallet)
-    // },[useWalletsStore.getState().wallets])
      
     const walletFoundInState = useWalletsStore.getState().wallets.find(wallet => wallet.address === address)
     const handleFavorite = () => {
         if(walletFoundInState){
             walletFoundInState.isFavorite = !walletFoundInState.isFavorite
             setFavorite(walletFoundInState.isFavorite)
-            // useWalletsStore.getState().toggleFavorite(walletFoundInState)
+            
         }
     }
+
+    useEffect(()=>{
+        const walletFoundInState = useWalletsStore.getState().wallets.find(wallet => wallet.address === address)
+        updateFavorite(walletFoundInState?.address as string, favorite)
+    },[favorite])
 
   return (
     <Card boxShadow="lg" border={"2px solid #DDDDDD"} backgroundColor={"#F8F9FB"} p={"15px 15px 30px"}  w={"100%"} minWidth={"270px"}>

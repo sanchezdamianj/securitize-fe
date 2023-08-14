@@ -37,3 +37,10 @@ export const createWallet = async (address: string) => {
     return !wallet
   
   }
+
+  export const updateFavorite = async (address:string, favorite:boolean) => {
+   
+    await axios.patch(`http://localhost:3000/api/v1/wallets/${address}`,{
+      isFavorite: favorite,
+    })
+  }

@@ -44,6 +44,4 @@ const useWalletsStore = create<WalletsState>((set) => ({
 );
 
 
-
-
 export default useWalletsStore;

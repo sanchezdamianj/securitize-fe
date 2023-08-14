@@ -18,7 +18,6 @@ const handleChange = (e:any) => {
 }
 
 useEffect(() => {
-  // setExchangeRate(+(useWalletsStore.getState().exchangeRates[0][currency]))
   getExchangeRate().then((rates) => { setExchangeRates(rates)});
 },[setExchangeRates])
 
