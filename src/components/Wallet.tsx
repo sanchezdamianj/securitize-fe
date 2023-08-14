@@ -11,7 +11,7 @@ import useWalletsStore from '../store/store'
 const Wallet = ({address,  balance }:Wallet) => {
     const [isAllowed, setIsAllowed] = useState(false)
     const [newAmount, setNewAmount ] = useState<number>(0)
-    const [testFav, setTestFav] = useState(false)
+    const [favorite, setFavorite] = useState(false)
     
     const handleAmountChange = () => {
     //aca editar el amount de balance de esa wallet en el state de zustand
@@ -27,13 +27,11 @@ const Wallet = ({address,  balance }:Wallet) => {
     // },[useWalletsStore.getState().wallets])
      
     const walletFoundInState = useWalletsStore.getState().wallets.find(wallet => wallet.address === address)
-    console.log(walletFoundInState)
     const handleFavorite = () => {
         if(walletFoundInState){
             walletFoundInState.isFavorite = !walletFoundInState.isFavorite
-            setTestFav(walletFoundInState.isFavorite)
+            setFavorite(walletFoundInState.isFavorite)
             // useWalletsStore.getState().toggleFavorite(walletFoundInState)
-            console.log(useWalletsStore.getState().wallets)
         }
     }
 
@@ -43,7 +41,7 @@ const Wallet = ({address,  balance }:Wallet) => {
         <Button onClick={handleFavorite}
         >
             {
-               (testFav) ?  <AiFillStar size="md" h={"30px"}/> : <AiOutlineStar size="md"/>
+               (favorite) ?  <AiFillStar style={{height: "20px", width:"20px"}}/> : <AiOutlineStar style={{height: "20px", width:"20px"}}/>
             }
         </Button>
         <Input 

@@ -1,54 +1,27 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import './App.css'
-import { Heading, Flex, Image, Box,Button,Input,FormControl, Spinner} from '@chakra-ui/react'
+import { Heading, Flex, Image, Box,Button,Input,FormControl, useToast} from '@chakra-ui/react'
 import logo  from '/securitizeLogo.svg'
 import {  useState } from 'react'
 import { WalletWrapper } from './components/WalletWrapper'
 import { useMutation } from "react-query";
-import axios from 'axios'
-import useWalletsStore from './store/store'
+import { createWallet, isUniqueInState, validateAddress } from './services/apidata.service'
 
 
 function App() {
-  const [isOpen, setIsOpen] = useState(false)
   const [address, setAddress] = useState('')
-  const [spinner, setSpinner] = useState(false)
-
-  const createWallet = async (address: string) => {
-    setSpinner(true)
-    await axios.put('http://localhost:3000/api/v1/wallets', 
-    {
-        address: address,
-        isFavorite: false,
-    },
-    );
-
-    const res = await axios.get(`http://localhost:3000/api/v1/wallets/${address}`,
-    { withCredentials: true })
-    const wallets = res.data
-
-    const newWallet = {
-      address: address,
-      balance: +(wallets.balance),
-      isFavorite: false,
-      isOld: wallets?.isOld,
-    }
-    useWalletsStore.getState().addWallet(newWallet) 
-    setSpinner(false)
-    return  <WalletWrapper />
-  };
-
   const {mutate} = useMutation(createWallet)
-
+  const toast = useToast()
   const handleClick = () => { 
-    setIsOpen(true)
-    mutate(address)
+    if(validateAddress(address) && isUniqueInState(address)){
+      mutate(address)
+    }else {
+      toast({title:'Invalid address', status:'error', duration:3000})
+    }
   }
 
   const handleChange = (event:any) => {
     setAddress(event.target.value)
   }
-
 
   return (
     <Box mt={8}>
@@ -57,7 +30,6 @@ function App() {
       <Image src={logo} alt='securitize' boxSize='50px'
     objectFit='cover'/>
     </Flex>
-
       <FormControl display={"flex"} justifyContent={"center"} alignItems={"center"} gap={1}>
         <Button onClick={handleClick} type='submit'>Insert
         </Button>
@@ -69,27 +41,7 @@ function App() {
               onChange={handleChange}
           />
       </FormControl>
-    {
-        isOpen && 
-         <Flex flexDir={"column"} justifyContent={"center"} alignItems={"stretch"} my={8}>
-          {spinner ? <Spinner
-                        thickness='4px'
-                        alignSelf={"center"}
-                        speed='0.65s'
-                        emptyColor='gray.200'
-                        color='blue.500'
-                        size='xl'
-                         />
-                   :
-                      (<>
-                        {/* <WalletList /> */}
-                        <WalletWrapper />
-                      </>
-                      )
-          }
-         </Flex>
-          }
-
+      <WalletWrapper />
     </Box>
   )
 }

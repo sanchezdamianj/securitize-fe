@@ -2,7 +2,6 @@
 import {create} from 'zustand';
 import { Wallet } from '../types';
 
-
 interface WalletsState {
   wallets: Wallet[];
   addWallet: (wallet: Wallet) => void;
@@ -10,10 +9,9 @@ interface WalletsState {
   sortWalletsByBalanceAsc: () => void;
   sortWalletsByBalanceDes: () => void;
   setExchangeRates: (rates: object | undefined) => void;
-
+  exchangeRates: object;
   sortByFavorites: () => void;
 }
-
 
 const useWalletsStore = create<WalletsState>((set) => ({
   wallets: [],

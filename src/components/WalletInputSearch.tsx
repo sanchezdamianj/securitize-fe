@@ -15,7 +15,6 @@ export const WalletInputSearch = () => {
         useWalletsStore.getState().addWallet({address})
         e.preventDefault();
         setAddress('');
-        console.log(useWalletsStore.getState().wallets)
     }
     
   return (
