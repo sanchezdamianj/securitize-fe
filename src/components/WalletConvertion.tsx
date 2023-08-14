@@ -8,13 +8,14 @@ import useWalletsStore from '../store/store';
 const WalletConvertion = ({balance}:Wallet) => {
   
   const [currency, setCurrency] = useState<string>("USD");
-  const [exchangeRate, setExchangeRate] = useState<number>(0);
   const setExchangeRates = useWalletsStore((state) => state.setExchangeRates);
+  const [exchangeRate, setExchangeRate] = useState(1);
 
 const handleChange = (e:any) => {
   e.preventDefault();
   setCurrency(e.target.value); 
-  setExchangeRate(+(useWalletsStore.getState().exchangeRates[0][currency]))
+  const excRateFromState = +(useWalletsStore.getState().exchangeRates[currency])
+  setExchangeRate(excRateFromState)
 }
 
 useEffect(() => {
@@ -29,7 +30,7 @@ useEffect(() => {
     <FormControl display={"flex"} justifyContent={"space-between"} alignItems={"center"} gap={2}>
         <Text fontWeight={"600"}>${(((balance??0) * exchangeRate).toFixed(3))?? 0}</Text>
             <Select onChange={handleChange}>
-                {['USD', 'EUR'].map(currency => 
+                {['Select','USD', 'EUR'].map(currency => 
                 <option key={currency} value={currency}> {currency}</option>
                 )
                 }

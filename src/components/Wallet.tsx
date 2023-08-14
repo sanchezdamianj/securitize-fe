@@ -14,21 +14,25 @@ const Wallet = ({address,  balance }:Wallet) => {
     const [newAmount, setNewAmount ] = useState<number>(0)
     const [favorite, setFavorite] = useState(false)
     
+    const walletFoundInState = useWalletsStore.getState().wallets.find(wallet => wallet.address === address)
+    
     const handleAmountChange = () => {
     //aca editar el amount de balance de esa wallet en el state de zustand y que recalcule el exc rate
-    //     useWalletsStore.getState().setNewAmount(newAmount)
-     }
+            console.log(walletFoundInState?.balance)
+            useWalletsStore.getState().updateWalletAmount(address, newAmount)
+   
+    }
+     
     
     const handleChange = (e:any) => {
         setNewAmount(e.target.value)
     }
      
-    const walletFoundInState = useWalletsStore.getState().wallets.find(wallet => wallet.address === address)
+
     const handleFavorite = () => {
         if(walletFoundInState){
             walletFoundInState.isFavorite = !walletFoundInState.isFavorite
-            setFavorite(walletFoundInState.isFavorite)
-            
+            setFavorite(walletFoundInState.isFavorite) 
         }
     }
 
@@ -49,7 +53,7 @@ const Wallet = ({address,  balance }:Wallet) => {
         <Input 
             isDisabled={!isAllowed}
             placeholder='Enter your ETH'
-            value={balance || newAmount}
+            value={newAmount ? (newAmount || 0): balance}
             style={{fontFamily: "600"}}
             onChange={handleChange}
             
@@ -85,6 +89,7 @@ const Wallet = ({address,  balance }:Wallet) => {
                 :  
                 <Button onClick={() => setIsAllowed(!isAllowed)}>    
                     <EditIcon/>
+                    {isAllowed}
                 </Button>
         }
     </CardBody>

@@ -11,15 +11,19 @@ interface WalletsState {
   setExchangeRates: (rates: object | undefined) => void;
   exchangeRates: object;
   sortByFavorites: () => void;
+  updateWalletAmount: (walletId:any, newAmount:number) => void;
 }
 
 const useWalletsStore = create<WalletsState>((set) => ({
   wallets: [],
   exchangeRates: {},
   addWallet: (wallet) => set((state) => ({ wallets: [...state.wallets, wallet] })),
-  //actualizar el balance de la walllet con el nuevo valor
-  // updateWalletAmount: (address, amount) => set((state) =>({wallets: [...state.wallets,]})),
-  // pickOne:  (wallet) => set((state) => ({ wallets: [...state.wallets, {...wallet, balance: }] })),
+  updateWalletAmount: (walletId:any, newAmount:number) =>
+    set((state) => ({
+      wallets: state.wallets.map((wallet) =>
+        wallet.id === walletId ? { ...wallet, balance: newAmount } : wallet
+      ),
+  })),
   toggleFavorite: (walletId) =>
     set((state) => ({
       wallets: state.wallets.map((wallet) =>

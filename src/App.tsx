@@ -11,6 +11,7 @@ function App() {
   const [address, setAddress] = useState('')
   const {mutate} = useMutation(createWallet)
   const toast = useToast()
+  
   const handleClick = () => { 
     if(validateAddress(address) && isUniqueInState(address)){
       mutate(address)

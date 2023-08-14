@@ -3,7 +3,7 @@ import useWalletsStore from "../store/store";
 
 export const getExchangeRate = async () => {  
     const response = await axios.get(`http://localhost:3000/api/v1/exchange-rate`);
-    return response.data;
+    return response.data[0];
 }
 
 
@@ -15,13 +15,13 @@ export const createWallet = async (address: string) => {
 
     const res = await axios.get(`http://localhost:3000/api/v1/wallets/${address}`,
     { withCredentials: true })
-    const wallets = res.data
+    const wallet = res.data
 
     const newWallet = {
       address: address,
-      balance: +(wallets.balance),
-      isFavorite: wallets?.isFavorite,
-      isOld: wallets?.isOld,
+      balance: +(wallet.balance),
+      isFavorite: wallet?.isFavorite,
+      isOld: wallet?.isOld,
     }
     useWalletsStore.getState().addWallet(newWallet) 
     return 
