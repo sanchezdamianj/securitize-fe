@@ -71,9 +71,10 @@ function App() {
       </FormControl>
     {
         isOpen && 
-         <Flex flexDir={"column"} justifyContent={"center"} alignItems={"center"} my={8}>
+         <Flex flexDir={"column"} justifyContent={"center"} alignItems={"stretch"} my={8}>
           {spinner ? <Spinner
                         thickness='4px'
+                        alignSelf={"center"}
                         speed='0.65s'
                         emptyColor='gray.200'
                         color='blue.500'

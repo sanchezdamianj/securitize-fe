@@ -10,15 +10,6 @@ export const WalletWrapper = () => {
   const wallets = useWalletsStore.getState().wallets
   const [sortedWallet, setSortedWallet] = useState<Wallet[]>([])
 
-  const handleSortWalletsAsc = () => {
-    useWalletsStore.getState().sortWalletsByBalanceAsc()
-    setSortedWallet(useWalletsStore.getState().wallets)
-  }
-  const handleSortWalletsDesc = () => {
-    useWalletsStore.getState().sortWalletsByBalanceDes()
-    setSortedWallet(useWalletsStore.getState().wallets)
-  }
-
   const handleSortedFavorite = () => {
     useWalletsStore.getState().sortByFavorites()
     setSortedWallet(useWalletsStore.getState().wallets)
@@ -29,13 +20,11 @@ export const WalletWrapper = () => {
   },[wallets])
 
   return (
-    <>
-    <Flex justifyContent={"end"} alignItems={"center"} my={4} gap={2}>
-      <Button onClick={handleSortWalletsAsc}>Sort Asc</Button>
-      <Button onClick={handleSortWalletsDesc}>Sort Desc</Button>
+    <div>
+    <Flex justifyContent={"end"} alignItems={"stretch"} my={4} gap={2}>
       <Button onClick={handleSortedFavorite}>Sort By Favs</Button>
     </Flex>
-    <div>{sortedWallet.map((w)=>{return (
+    <div >{sortedWallet.map((w)=>{return (
       <div key={w.address}>
         {   w.isOld && (
             <Alert status='error'>
@@ -43,7 +32,7 @@ export const WalletWrapper = () => {
                 This Wallet is Old
             </Alert>)
        }
-      <Flex  gap={8} justifyContent={"center"} alignItems={"center"} width={"100%"} my={4} > 
+      <Flex  gap={8} justifyContent={"center"}  my={4} > 
         <Wallet balance={w.balance} address={w.address} />    
         <WalletConvertion balance={w.balance} address={w.address} />
       </Flex>
@@ -51,6 +40,6 @@ export const WalletWrapper = () => {
       </div> )}) }
   
     </div>
-    </>
+    </div>
   )
 }

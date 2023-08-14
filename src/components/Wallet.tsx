@@ -38,12 +38,12 @@ const Wallet = ({address,  balance }:Wallet) => {
     }
 
   return (
-    <Card boxShadow="lg" border={"2px solid #DDDDDD"} backgroundColor={"#F8F9FB"} p={"5px 15px 20px"}  w={"100%"} minWidth={"270px"}>
-    <CardBody display={"flex"} justifyContent={"space=between"} alignItems={"center"} gap={2}> 
+    <Card boxShadow="lg" border={"2px solid #DDDDDD"} backgroundColor={"#F8F9FB"} p={"15px 15px 30px"}  w={"100%"} minWidth={"270px"}>
+    <CardBody display={"flex"} justifyContent={"space-between"} alignItems={"center"} gap={2}> 
         <Button onClick={handleFavorite}
         >
             {
-               (testFav) ?  <AiFillStar size="md" /> : <AiOutlineStar size="md"/>
+               (testFav) ?  <AiFillStar size="md" h={"30px"}/> : <AiOutlineStar size="md"/>
             }
         </Button>
         <Input 
@@ -71,6 +71,7 @@ const Wallet = ({address,  balance }:Wallet) => {
                         _hover={{ bg: "orange", color: " white", transition: "0.3s background-color ease-out, 0.2s color ease-out" }}
                     >
                         <CheckIcon
+                            boxSize={4}
                             color={'#3488EF'}
                             onClick={() => {
                                 handleAmountChange()
