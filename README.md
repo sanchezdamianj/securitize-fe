@@ -15,11 +15,9 @@ This is a challenge for Securitize io
 
 ### Pre-requisites 📋
 
-You have to install Nest JS, pnpm, Chakra UI ans Typescript.
+You have to install pnpm, Chakra UI and Typescript.
 
 The followings websites to get started:
-- https://nestjs.com/
-- https://docs.cypress.io/guides/overview/why-cypress/
 - https://chakra-ui.com/
 - https://pnpm.io/es/
 
