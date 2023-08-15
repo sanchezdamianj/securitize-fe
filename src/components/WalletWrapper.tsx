@@ -13,7 +13,6 @@ export const WalletWrapper = () => {
   const handleSortedFavorite = () => {
     useWalletsStore.getState().sortByFavorites()
     setSortedWallet(useWalletsStore.getState().wallets)
-    console.log(sortedWallet)
   }
 
   useEffect(()=>{

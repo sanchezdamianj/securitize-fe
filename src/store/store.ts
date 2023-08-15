@@ -12,16 +12,18 @@ interface WalletsState {
   exchangeRates: object;
   sortByFavorites: () => void;
   updateWalletAmount: (walletId:any, newAmount:number) => void;
+  isloading: boolean;
 }
 
 const useWalletsStore = create<WalletsState>((set) => ({
   wallets: [],
   exchangeRates: {},
+  isloading: false,
   addWallet: (wallet) => set((state) => ({ wallets: [...state.wallets, wallet] })),
-  updateWalletAmount: (walletId:any, newAmount:number) =>
+  updateWalletAmount: (address, newAmount:number) =>
     set((state) => ({
       wallets: state.wallets.map((wallet) =>
-        wallet.id === walletId ? { ...wallet, balance: newAmount } : wallet
+        wallet.address === address ? { ...wallet, balance: newAmount } : wallet
       ),
   })),
   toggleFavorite: (walletId) =>
