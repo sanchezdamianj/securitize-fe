@@ -7,7 +7,7 @@ This is a challenge for Securitize io
 
 * [React](https://es.reactjs.org/docs) - Frontend JS Library -React v18- 
 * [TypeScript](https://www.typescriptlang.org/docs/) - Typos
-* [Chackra UI](https://chakra-ui.com/getting-started) - Style in Breadcrumb -
+* [Chackra UI](https://chakra-ui.com/getting-started) - Styles -
 * [pnpm ](https://pnpm.io/es/) - package manager -
 
 ## Get started with this application 🚀
@@ -27,6 +27,8 @@ The followings websites to get started:
 
 If you want to run this app, you can open a terminal, and write: git clone https://github.com/sanchezdamianj/securitize-fe.git
 
+After that, write pnpm i in your terminal.
+
 # Getting Started with Vite React Typescript App
 
 This project was bootstrapped with [pnpm create vite](https://vitejs.dev/guide/).
@@ -34,7 +36,7 @@ This project was bootstrapped with [pnpm create vite](https://vitejs.dev/guide/)
 ## Available Scripts
 
 In the project directory, you can run:
-### `pnpm start`
+### `pnpm dev`
     -   Inside of src folder, open a terminal
     -   This server runs in PORT 5173
     -   Run the following command
