@@ -2,7 +2,6 @@ import { Button,Input,FormControl } from '@chakra-ui/react'
 import {  SetStateAction, useState } from 'react'
 import useWalletsStore from '../store/store'
 
-
 export const WalletInputSearch = () => {
     const [address, setAddress] = useState('')
 

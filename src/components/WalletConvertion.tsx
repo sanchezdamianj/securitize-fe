@@ -36,11 +36,10 @@ useEffect(() => {
     <Card boxShadow="lg" border={"2px solid #DDDDDD"} backgroundColor={"#F8F9FB"} p={"5px 15px 20px"} w={"100%"} minWidth={"270px"}>
     <CardBody display={"flex"} justifyContent={"center"} alignItems={"center"} gap={2}>
     <FormControl display={"flex"} justifyContent={"space-between"} alignItems={"center"} gap={2}>
-        <Text fontWeight={"600"}>${((((newAmount)? newAmount : balance) * exchangeRate).toFixed(3))?? 0}</Text>
+        <Text fontWeight={"600"}>${((((newAmount)? newAmount : balance) * exchangeRate).toFixed(2))?? 0}</Text>
             <Select onChange={handleChange}>
                 {['Select','USD', 'EUR'].map(currency => 
-                <option key={currency} value={currency}> {currency}</option>
-                )
+                <option key={currency} value={currency}> {currency}</option>)
                 }
             </Select>       
     </FormControl>

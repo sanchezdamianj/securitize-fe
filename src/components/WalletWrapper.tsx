@@ -20,7 +20,7 @@ export const WalletWrapper = () => {
   },[wallets])
 
   return (
-    <div>
+    <>
       <Flex justifyContent={"end"} alignItems={"stretch"} my={4} gap={2}>
         <Button onClick={handleSortedFavorite}>Sort By Favs</Button>
       </Flex>
@@ -37,7 +37,7 @@ export const WalletWrapper = () => {
                          />
         </Flex>
               :
-      <div>{sortedWallet.map((w)=>{return (
+      <>{sortedWallet.map((w)=>{return (
         <div key={w.address}>
           {   w.isOld && (
               <Alert status='error'>
@@ -51,8 +51,8 @@ export const WalletWrapper = () => {
           </Flex>
           <Divider mt={12} />
         </div> )}) }
-      </div>
+      </>
       } 
-    </div>
+    </>
   )
 }
